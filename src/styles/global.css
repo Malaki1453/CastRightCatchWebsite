@@ -1,0 +1,107 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Cormorant Garamond", ui-serif, Georgia, "Times New Roman", serif;
+  --font-sans: "Source Sans 3", ui-sans-serif, system-ui, sans-serif;
+
+  --color-navy-950: #071221;
+  --color-navy-900: #0b1c32;
+  --color-navy-800: #122846;
+  --color-navy-700: #17375f;
+  --color-navy-600: #1e4a82;
+  --color-navy-500: #2a5f9e;
+
+  --color-gold-300: #e0c57a;
+  --color-gold-400: #d4af5a;
+  --color-gold-500: #c4a047;
+  --color-gold-600: #a38432;
+
+  --color-cream-50: #fbf8f2;
+  --color-cream-100: #f4efe4;
+  --color-cream-200: #e8dfd0;
+  --color-ink: #1c2430;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    font-family: var(--font-sans);
+    color: var(--color-ink);
+    background-color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-gold-500);
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  .diamond-rule {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    color: var(--color-gold-500);
+  }
+
+  .diamond-rule::before,
+  .diamond-rule::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.7;
+  }
+
+  .diamond-rule span {
+    width: 0.55rem;
+    height: 0.55rem;
+    rotate: 45deg;
+    background: currentColor;
+    flex-shrink: 0;
+  }
+
+  .btn-gold {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-gold-500);
+    color: var(--color-navy-950);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 0.85rem 1.6rem;
+    border-radius: 999px;
+    transition: background-color 150ms ease, transform 150ms ease;
+  }
+
+  .btn-gold:hover {
+    background: var(--color-gold-400);
+  }
+
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgb(255 255 255 / 0.7);
+    color: #fff;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 0.85rem 1.6rem;
+    border-radius: 999px;
+    transition: background-color 150ms ease, border-color 150ms ease;
+  }
+
+  .btn-outline:hover {
+    background: rgb(255 255 255 / 0.12);
+    border-color: #fff;
+  }
+}

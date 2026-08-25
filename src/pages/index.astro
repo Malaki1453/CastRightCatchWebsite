@@ -1,0 +1,86 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { site } from "../data/site";
+
+const pillars = [
+  {
+    title: "Trust & Integrity",
+    body: "Great business is built on lasting relationships. We do business the right way — with honesty, wisdom, and trusted partnerships.",
+  },
+  {
+    title: "29+ Years of Experience",
+    body: "From the docks to sales, leadership has worked every corner of the seafood industry — and brings that full-circle knowledge to every customer we serve.",
+  },
+  {
+    title: "Quality, Start to Finish",
+    body: "We partner with top-tier producers who manage quality, sustainability, and commitment, then simplify the logistics that keep the supply chain moving.",
+  },
+];
+---
+
+<BaseLayout transparentHeader>
+  <section class="relative isolate min-h-[100svh] overflow-hidden">
+    <img
+      src="/images/hero.jpg"
+      alt="A fishing boat hauls a net of silver fish from cold water with snow-covered mountains behind it."
+      class="absolute inset-0 h-full w-full object-cover object-[42%_center]"
+      fetchpriority="high"
+    />
+    <div class="absolute inset-0 bg-gradient-to-b from-navy-950/55 via-navy-950/15 to-navy-950/70"></div>
+
+    <div class="relative z-10 mx-auto flex min-h-[100svh] max-w-5xl flex-col items-center justify-end px-5 pb-16 pt-28 text-center text-white md:pb-20 md:pt-32">
+      <img
+        src="/images/logo-hero.png"
+        alt={site.name}
+        class="mb-4 h-24 w-[min(92vw,28rem)] object-cover object-center md:h-28 md:w-[32rem]"
+      />
+      <h1 class="font-display text-4xl font-semibold leading-tight text-balance drop-shadow-md sm:text-5xl md:text-6xl">
+        Following the Right Direction.<br class="hidden sm:block" />
+        Delivering the Right Catch.
+      </h1>
+      <div class="diamond-rule mx-auto mt-6 w-40 text-gold-400" aria-hidden="true"><span></span></div>
+      <p class="mt-5 max-w-xl text-base text-white/90 sm:text-lg">
+        {site.guidedBy}
+      </p>
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+        <a href="/contact" class="btn-gold">Get in Touch</a>
+        <a href="/about" class="btn-outline">Our Story</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-cream-50">
+    <div class="mx-auto max-w-6xl px-5 py-20 md:px-8 md:py-24">
+      <p class="text-center text-sm font-semibold tracking-[0.22em] uppercase text-gold-600">
+        Seafood wholesale
+      </p>
+      <h2 class="mx-auto mt-3 max-w-3xl text-center font-display text-4xl font-semibold text-navy-800 text-balance md:text-5xl">
+        We partner with buyers and producers who care about the catch — and the way it gets there.
+      </h2>
+      <p class="mx-auto mt-6 max-w-2xl text-center text-lg leading-relaxed text-navy-800/80">
+        Cast Right Catch Co. provides premium seafood while simplifying the logistics that keep the supply chain moving. Quality and commitment, from start to finish.
+      </p>
+
+      <div class="mt-14 grid gap-6 md:grid-cols-3">
+        {
+          pillars.map((pillar) => (
+            <article class="rounded-2xl bg-white p-8 shadow-[0_10px_30px_-18px_rgba(11,28,50,0.35)]">
+              <h3 class="font-display text-2xl font-semibold text-navy-800">{pillar.title}</h3>
+              <p class="mt-3 leading-relaxed text-navy-800/80">{pillar.body}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-navy-900 text-white">
+    <div class="mx-auto max-w-4xl px-5 py-16 text-center md:px-8 md:py-20">
+      <h2 class="font-display text-4xl font-semibold md:text-5xl">Ready to talk catch?</h2>
+      <p class="mx-auto mt-4 max-w-xl text-white/80">
+        Tell us what you need. We will get back to you shortly.
+      </p>
+      <a href="/contact" class="btn-gold mt-8">Contact Cast Right Catch</a>
+    </div>
+  </section>
+</BaseLayout>

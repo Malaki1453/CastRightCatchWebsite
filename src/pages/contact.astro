@@ -1,0 +1,128 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { site } from "../data/site";
+
+const thanksUrl = new URL("/thanks", Astro.url.origin).href;
+---
+
+<BaseLayout
+  title="Contact"
+  description="Get in touch with Cast Right Catch Co. We would love to hear from you."
+>
+  <section class="bg-navy-950 pt-32 pb-16 text-white md:pt-36">
+    <div class="mx-auto max-w-4xl px-5 text-center md:px-8">
+      <p class="text-sm font-semibold tracking-[0.22em] uppercase text-gold-400">Contact</p>
+      <h1 class="mt-3 font-display text-5xl font-semibold md:text-6xl">Get in Touch</h1>
+      <p class="mx-auto mt-5 max-w-xl text-lg text-white/80">
+        We'd love to hear from you. Fill out the form below and our team will get back to you shortly.
+      </p>
+    </div>
+  </section>
+
+  <section class="bg-cream-50">
+    <div class="mx-auto grid max-w-6xl gap-10 px-5 py-16 md:grid-cols-[1fr_1.15fr] md:px-8 md:py-20">
+      <aside class="h-fit rounded-2xl bg-white p-8 shadow-sm">
+        <h2 class="font-display text-3xl font-semibold text-navy-800">Cast Right Catch Co.</h2>
+        <div class="diamond-rule my-5 w-28 text-gold-500" aria-hidden="true"><span></span></div>
+        <ul class="space-y-5 text-navy-800">
+          <li>
+            <p class="text-xs font-semibold tracking-[0.16em] uppercase text-gold-600">Phone</p>
+            <a href={site.phoneHref} class="mt-1 inline-block text-lg hover:text-navy-600">{site.phone}</a>
+          </li>
+          <li>
+            <p class="text-xs font-semibold tracking-[0.16em] uppercase text-gold-600">Email</p>
+            <a href={`mailto:${site.email}`} class="mt-1 inline-block text-lg hover:text-navy-600">{site.email}</a>
+          </li>
+          <li>
+            <p class="text-xs font-semibold tracking-[0.16em] uppercase text-gold-600">Mailing Address</p>
+            <p class="mt-1 text-lg">
+              {site.addressLines[0]}<br />
+              {site.addressLines[1]}
+            </p>
+          </li>
+        </ul>
+      </aside>
+
+      <form
+        class="rounded-2xl bg-white p-6 shadow-sm md:p-8"
+        action={`https://formsubmit.co/${site.formEmail}`}
+        method="POST"
+      >
+        <input type="hidden" name="_subject" value="New inquiry from castrightcatch.com" />
+        <input type="hidden" name="_next" value={thanksUrl} />
+        <input type="hidden" name="_captcha" value="false" />
+        <input type="hidden" name="_template" value="table" />
+        <input type="text" name="_honey" class="hidden" tabindex="-1" autocomplete="off" />
+
+        <div class="grid gap-5 sm:grid-cols-2">
+          <label class="block sm:col-span-1">
+            <span class="mb-1.5 block text-sm font-medium text-navy-800">First Name</span>
+            <input
+              type="text"
+              name="firstName"
+              autocomplete="given-name"
+              class="w-full rounded-lg border border-cream-200 bg-cream-50 px-3 py-2.5 text-navy-900 outline-none focus:border-navy-600"
+            />
+          </label>
+          <label class="block">
+            <span class="mb-1.5 block text-sm font-medium text-navy-800">Last Name <span class="text-navy-600">*</span></span>
+            <input
+              type="text"
+              name="lastName"
+              required
+              autocomplete="family-name"
+              class="w-full rounded-lg border border-cream-200 bg-cream-50 px-3 py-2.5 text-navy-900 outline-none focus:border-navy-600"
+            />
+          </label>
+          <label class="block sm:col-span-2">
+            <span class="mb-1.5 block text-sm font-medium text-navy-800">Email <span class="text-navy-600">*</span></span>
+            <input
+              type="email"
+              name="email"
+              required
+              autocomplete="email"
+              class="w-full rounded-lg border border-cream-200 bg-cream-50 px-3 py-2.5 text-navy-900 outline-none focus:border-navy-600"
+            />
+          </label>
+          <label class="block">
+            <span class="mb-1.5 block text-sm font-medium text-navy-800">Phone Number</span>
+            <input
+              type="tel"
+              name="phone"
+              autocomplete="tel"
+              class="w-full rounded-lg border border-cream-200 bg-cream-50 px-3 py-2.5 text-navy-900 outline-none focus:border-navy-600"
+            />
+          </label>
+          <label class="block">
+            <span class="mb-1.5 block text-sm font-medium text-navy-800">Company Name</span>
+            <input
+              type="text"
+              name="company"
+              autocomplete="organization"
+              class="w-full rounded-lg border border-cream-200 bg-cream-50 px-3 py-2.5 text-navy-900 outline-none focus:border-navy-600"
+            />
+          </label>
+          <label class="block sm:col-span-2">
+            <span class="mb-1.5 block text-sm font-medium text-navy-800">How can we help?</span>
+            <textarea
+              name="message"
+              rows="5"
+              class="w-full resize-y rounded-lg border border-cream-200 bg-cream-50 px-3 py-2.5 text-navy-900 outline-none focus:border-navy-600"
+            ></textarea>
+          </label>
+        </div>
+
+        <label class="mt-5 flex items-start gap-3 text-sm leading-relaxed text-navy-800/85">
+          <input type="checkbox" name="consent" required class="mt-1 h-4 w-4 accent-navy-700" />
+          <span>
+            I agree to Cast Right Catch's
+            <a href="/privacy" class="underline decoration-gold-500 underline-offset-2">privacy policy</a>.
+            By submitting this form, you consent to receive follow-up messages at the email or number provided. Message and data rates may apply. You can unsubscribe at any time by replying STOP.
+          </span>
+        </label>
+
+        <button type="submit" class="btn-gold mt-6 w-full sm:w-auto">Send Message</button>
+      </form>
+    </div>
+  </section>
+</BaseLayout>

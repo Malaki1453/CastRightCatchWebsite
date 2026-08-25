@@ -1,0 +1,130 @@
+---
+import { nav, site } from "../data/site";
+
+interface Props {
+  transparent?: boolean;
+}
+
+const { transparent = false } = Astro.props;
+const current = Astro.url.pathname.replace(/\/$/, "") || "/";
+---
+
+<header
+  id="site-header"
+  data-transparent={transparent ? "true" : "false"}
+  class:list={[
+    "fixed inset-x-0 top-0 z-50 transition-colors duration-300",
+    transparent ? "text-white" : "bg-navy-950 text-white shadow-sm",
+  ]}
+>
+  <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-3 md:px-8">
+    <a href="/" class="flex items-center gap-3 min-w-0" aria-label={`${site.name} home`}>
+      <img
+        src="/images/seal.png"
+        alt=""
+        class="h-11 w-11 shrink-0 object-contain md:h-12 md:w-12"
+      />
+      <span class="hidden sm:flex flex-col leading-none">
+        <span class="font-display text-lg font-semibold tracking-[0.18em] md:text-xl">CAST RIGHT</span>
+        <span class="mt-1 flex items-center gap-2 text-sm">
+          <span class="h-px w-5 bg-gold-500"></span>
+          <span class="font-display italic tracking-wide">Catch Co.</span>
+          <span class="h-px w-5 bg-gold-500"></span>
+        </span>
+      </span>
+    </a>
+
+    <nav class="hidden items-center gap-8 md:flex" aria-label="Primary">
+      {
+        nav.map((item) => {
+          const active = current === item.href;
+          return (
+            <a
+              href={item.href}
+              class:list={[
+                "text-sm font-semibold tracking-[0.14em] uppercase transition-colors",
+                active ? "text-gold-400" : "text-white/90 hover:text-gold-300",
+              ]}
+              aria-current={active ? "page" : undefined}
+            >
+              {item.label}
+            </a>
+          );
+        })
+      }
+      <a href={site.phoneHref} class="text-sm font-medium text-white/80 hover:text-gold-300">
+        {site.phone}
+      </a>
+    </nav>
+
+    <button
+      id="menu-toggle"
+      class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/30 md:hidden"
+      type="button"
+      aria-expanded="false"
+      aria-controls="mobile-nav"
+      aria-label="Open menu"
+    >
+      <span class="sr-only">Menu</span>
+      <svg id="menu-icon" viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M4 7h16M4 12h16M4 17h16"></path>
+      </svg>
+    </button>
+  </div>
+
+  <div id="mobile-nav" class="hidden border-t border-white/10 bg-navy-950/95 px-5 py-4 backdrop-blur md:hidden">
+    <nav class="flex flex-col gap-3" aria-label="Mobile">
+      {
+        nav.map((item) => {
+          const active = current === item.href;
+          return (
+            <a
+              href={item.href}
+              class:list={[
+                "py-2 text-sm font-semibold tracking-[0.14em] uppercase",
+                active ? "text-gold-400" : "text-white",
+              ]}
+            >
+              {item.label}
+            </a>
+          );
+        })
+      }
+      <a href={site.phoneHref} class="py-2 text-sm text-white/80">{site.phone}</a>
+      <a href={`mailto:${site.email}`} class="py-2 text-sm text-white/80">{site.email}</a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const header = document.getElementById("site-header");
+  const toggle = document.getElementById("menu-toggle");
+  const panel = document.getElementById("mobile-nav");
+
+  const onScroll = () => {
+    if (!header || header.dataset.transparent !== "true") return;
+    header.classList.toggle("is-scrolled", window.scrollY > 16);
+  };
+
+  onScroll();
+  window.addEventListener("scroll", onScroll, { passive: true });
+
+  toggle?.addEventListener("click", () => {
+    const open = panel?.classList.contains("hidden");
+    panel?.classList.toggle("hidden", !open);
+    toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+  });
+</script>
+
+<style>
+  #site-header[data-transparent="true"] {
+    background: transparent;
+  }
+
+  #site-header[data-transparent="true"].is-scrolled,
+  #site-header[data-transparent="true"]:has(#mobile-nav:not(.hidden)) {
+    background: rgb(7 18 33 / 0.92);
+    backdrop-filter: blur(10px);
+  }
+</style>

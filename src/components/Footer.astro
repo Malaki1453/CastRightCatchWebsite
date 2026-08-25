@@ -1,0 +1,69 @@
+---
+import { nav, site } from "../data/site";
+---
+
+<footer class="bg-cream-50 text-navy-900">
+  <div class="mx-auto max-w-6xl px-5 py-14 md:px-8">
+    <div class="grid gap-10 md:grid-cols-[1.2fr_1fr] md:items-center">
+      <div class="flex flex-col items-start gap-5 sm:flex-row sm:items-center">
+        <img src="/images/seal.png" alt="" class="h-24 w-24 object-contain sm:h-28 sm:w-28" />
+        <div>
+          <p class="font-display text-4xl font-semibold tracking-[0.12em] text-navy-700 md:text-5xl">
+            CAST RIGHT
+          </p>
+          <p class="mt-1 flex items-center gap-3 font-display text-2xl italic text-navy-700">
+            <span class="h-px w-8 bg-gold-500"></span>
+            Catch Co.
+            <span class="h-px w-8 bg-gold-500"></span>
+          </p>
+        </div>
+      </div>
+
+      <ul class="space-y-3 text-[15px]">
+        <li>
+          <a href={site.phoneHref} class="inline-flex items-center gap-3 hover:text-navy-600">
+            <span class="flex h-8 w-8 items-center justify-center text-gold-600" aria-hidden="true">
+              <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M6.5 3.8h3.2l1.3 3.2-2 1.2a12.5 12.5 0 0 0 6.8 6.8l1.2-2 3.2 1.3v3.2c0 .7-.6 1.3-1.3 1.3C10.6 18.8 5.2 13.4 5.2 5.1c0-.7.6-1.3 1.3-1.3Z" />
+              </svg>
+            </span>
+            {site.phone}
+          </a>
+        </li>
+        <li>
+          <a href={`mailto:${site.email}`} class="inline-flex items-center gap-3 hover:text-navy-600">
+            <span class="flex h-8 w-8 items-center justify-center text-gold-600" aria-hidden="true">
+              <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8">
+                <rect x="3.5" y="5.5" width="17" height="13" rx="1.5" />
+                <path d="m4 7 8 6 8-6" />
+              </svg>
+            </span>
+            {site.email}
+          </a>
+        </li>
+        <li class="inline-flex items-start gap-3">
+          <span class="mt-0.5 flex h-8 w-8 items-center justify-center text-gold-600" aria-hidden="true">
+            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M12 21s7-6.2 7-11.2A7 7 0 1 0 5 9.8C5 14.8 12 21 12 21Z" />
+              <circle cx="12" cy="9.8" r="2.2" />
+            </svg>
+          </span>
+          <span>
+            {site.addressLines[0]}<br />
+            {site.addressLines[1]}
+          </span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="diamond-rule my-10 text-navy-700" aria-hidden="true"><span></span></div>
+
+    <div class="flex flex-col items-start justify-between gap-4 text-sm text-navy-700/80 sm:flex-row sm:items-center">
+      <nav class="flex flex-wrap gap-x-6 gap-y-2" aria-label="Footer">
+        {nav.map((item) => <a href={item.href} class="hover:text-navy-900">{item.label}</a>)}
+        <a href="/privacy" class="hover:text-navy-900">Privacy Policy</a>
+      </nav>
+      <p>© {new Date().getFullYear()} {site.name}</p>
+    </div>
+  </div>
+</footer>
