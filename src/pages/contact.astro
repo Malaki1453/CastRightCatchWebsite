@@ -26,19 +26,8 @@ const thanksUrl = new URL("/thanks", Astro.url.origin).href;
         <div class="diamond-rule my-5 w-28 text-gold-500" aria-hidden="true"><span></span></div>
         <ul class="space-y-5 text-navy-800">
           <li>
-            <p class="text-xs font-semibold tracking-[0.16em] uppercase text-gold-600">Phone</p>
-            <a href={site.phoneHref} class="mt-1 inline-block text-lg hover:text-navy-600">{site.phone}</a>
-          </li>
-          <li>
             <p class="text-xs font-semibold tracking-[0.16em] uppercase text-gold-600">Email</p>
             <a href={`mailto:${site.email}`} class="mt-1 inline-block text-lg hover:text-navy-600">{site.email}</a>
-          </li>
-          <li>
-            <p class="text-xs font-semibold tracking-[0.16em] uppercase text-gold-600">Mailing Address</p>
-            <p class="mt-1 text-lg">
-              {site.addressLines[0]}<br />
-              {site.addressLines[1]}
-            </p>
           </li>
         </ul>
       </aside>

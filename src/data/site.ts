@@ -6,11 +6,8 @@ export const site = {
   description:
     "Cast Right Catch Co. partners with seafood buyers domestically and globally, providing premium seafood while simplifying the logistics that keep the supply chain moving.",
   url: "https://www.castrightcatch.com",
-  phone: "(253) 540-2631",
-  phoneHref: "tel:+12535402631",
-  email: "jwatts@castrightcatch.com",
+  email: "info@castrightcatch.com",
   formEmail: "info@castrightcatch.com",
-  addressLines: ["PO Box 1064", "Orting, WA 98360"],
   founded: "June 2026",
 };
 

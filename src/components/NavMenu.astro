@@ -1,0 +1,85 @@
+---
+import { nav } from "../data/site";
+
+interface Props {
+  align?: "end" | "center";
+}
+
+const { align = "end" } = Astro.props;
+const current = Astro.url.pathname.replace(/\/$/, "") || "/";
+---
+
+<div class="relative">
+  <button
+    id="menu-toggle"
+    class="inline-flex items-center gap-2 rounded-full border border-white/40 bg-navy-950/70 px-4 py-2 text-sm font-semibold tracking-[0.14em] uppercase text-white shadow-sm backdrop-blur-sm hover:border-gold-400 hover:text-gold-300"
+    type="button"
+    aria-expanded="false"
+    aria-controls="site-menu"
+    aria-haspopup="true"
+    aria-label="Open menu"
+  >
+    Menu
+    <svg id="menu-chevron" viewBox="0 0 24 24" class="h-4 w-4 transition-transform" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+      <path d="m6 9 6 6 6-6"></path>
+    </svg>
+  </button>
+
+  <div
+    id="site-menu"
+    class:list={[
+      "absolute top-[calc(100%+0.6rem)] hidden w-56 rounded-2xl border border-white/10 bg-navy-950/95 py-2 shadow-[0_18px_40px_-18px_rgba(0,0,0,0.65)] backdrop-blur-md",
+      align === "center" ? "left-1/2 -translate-x-1/2" : "right-0",
+    ]}
+  >
+    <nav class="flex flex-col" aria-label="Primary">
+      {
+        nav.map((item) => {
+          const active = current === item.href;
+          return (
+            <a
+              href={item.href}
+              class:list={[
+                "px-4 py-2.5 text-sm font-semibold tracking-[0.14em] uppercase transition-colors",
+                active ? "text-gold-400" : "text-white/90 hover:bg-white/5 hover:text-gold-300",
+              ]}
+              aria-current={active ? "page" : undefined}
+            >
+              {item.label}
+            </a>
+          );
+        })
+      }
+    </nav>
+  </div>
+</div>
+
+<script>
+  const toggle = document.getElementById("menu-toggle");
+  const panel = document.getElementById("site-menu");
+  const chevron = document.getElementById("menu-chevron");
+
+  const setOpen = (open) => {
+    panel?.classList.toggle("hidden", !open);
+    toggle?.setAttribute("aria-expanded", open ? "true" : "false");
+    toggle?.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    chevron?.classList.toggle("rotate-180", open);
+  };
+
+  toggle?.addEventListener("click", (event) => {
+    event.stopPropagation();
+    const open = panel?.classList.contains("hidden");
+    setOpen(Boolean(open));
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!panel || panel.classList.contains("hidden")) return;
+    const target = event.target;
+    if (toggle?.contains(target) || panel.contains(target)) return;
+    setOpen(false);
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") setOpen(false);
+  });
+</script>

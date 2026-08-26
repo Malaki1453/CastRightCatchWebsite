@@ -8,12 +8,16 @@ interface Props {
   title?: string;
   description?: string;
   transparentHeader?: boolean;
+  hideHeader?: boolean;
+  lockViewport?: boolean;
 }
 
 const {
   title,
   description = site.description,
   transparentHeader = false,
+  hideHeader = false,
+  lockViewport = false,
 } = Astro.props;
 
 const pageTitle = title ? `${title} | ${site.shortName}` : `${site.shortName} | ${site.tagline}`;
@@ -22,7 +26,7 @@ const ogImage = new URL("/images/hero.jpg", site.url).href;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class:list={[lockViewport && "lock-viewport"]}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -53,30 +57,21 @@ const ogImage = new URL("/images/hero.jpg", site.url).href;
       name: site.name,
       url: site.url,
       email: site.email,
-      telephone: site.phoneHref.replace("tel:", ""),
       image: ogImage,
       logo: new URL("/images/seal.png", site.url).href,
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: "PO Box 1064",
-        addressLocality: "Orting",
-        addressRegion: "WA",
-        postalCode: "98360",
-        addressCountry: "US",
-      },
     })} />
   </head>
-  <body class="min-h-screen flex flex-col antialiased">
+  <body class:list={[lockViewport ? "h-svh overflow-hidden antialiased" : "min-h-screen flex flex-col antialiased"]}>
     <a
       href="#main"
       class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-white focus:px-4 focus:py-2 focus:text-navy-900"
     >
       Skip to content
     </a>
-    <Header transparent={transparentHeader} />
-    <main id="main" class="flex-1">
+    {hideHeader ? null : <Header transparent={transparentHeader} />}
+    <main id="main" class:list={[lockViewport ? "h-full overflow-hidden" : "flex-1"]}>
       <slot />
     </main>
-    <Footer />
+    {lockViewport ? null : <Footer />}
   </body>
 </html>
