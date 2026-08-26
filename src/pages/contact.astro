@@ -2,7 +2,8 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { site } from "../data/site";
 
-const thanksUrl = new URL("/thanks", Astro.url.origin).href;
+const thanksUrl = new URL("/thanks", site.url).href;
+const formEndpoint = `https://formsubmit.co/ajax/${site.formEmail}`;
 ---
 
 <BaseLayout
@@ -33,12 +34,16 @@ const thanksUrl = new URL("/thanks", Astro.url.origin).href;
       </aside>
 
       <form
+        id="contact-form"
         class="rounded-2xl bg-white p-6 shadow-sm md:p-8"
         action={`https://formsubmit.co/${site.formEmail}`}
         method="POST"
+        data-endpoint={formEndpoint}
+        data-thanks="/thanks"
       >
         <input type="hidden" name="_subject" value="New inquiry from castrightcatch.com" />
         <input type="hidden" name="_next" value={thanksUrl} />
+        <input type="hidden" name="_url" value={new URL("/contact", site.url).href} />
         <input type="hidden" name="_captcha" value="false" />
         <input type="hidden" name="_template" value="table" />
         <input type="text" name="_honey" class="hidden" tabindex="-1" autocomplete="off" />
@@ -104,14 +109,53 @@ const thanksUrl = new URL("/thanks", Astro.url.origin).href;
         <label class="mt-5 flex items-start gap-3 text-sm leading-relaxed text-navy-800/85">
           <input type="checkbox" name="consent" required class="mt-1 h-4 w-4 accent-navy-700" />
           <span>
-            I agree to Cast Right Catch's 
+            I agree to Cast Right Catch's{" "}
             <a href="/privacy" class="underline decoration-gold-500 underline-offset-2">privacy policy</a>.
             By submitting this form, you consent to receive follow-up messages at the email or number provided. Message and data rates may apply. You can unsubscribe at any time by replying STOP.
           </span>
         </label>
 
+        <p id="form-error" class="mt-4 hidden text-sm text-red-700" role="alert"></p>
         <button type="submit" class="btn-gold mt-6 w-full sm:w-auto">Send Message</button>
       </form>
     </div>
   </section>
 </BaseLayout>
+
+<script>
+  const form = document.getElementById("contact-form");
+  const errorEl = document.getElementById("form-error");
+  const button = form?.querySelector('button[type="submit"]');
+
+  form?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    if (!(form instanceof HTMLFormElement)) return;
+
+    errorEl?.classList.add("hidden");
+    if (button instanceof HTMLButtonElement) {
+      button.disabled = true;
+      button.textContent = "Sending…";
+    }
+
+    try {
+      const response = await fetch(form.dataset.endpoint ?? form.action, {
+        method: "POST",
+        body: new FormData(form),
+        headers: { Accept: "application/json" },
+      });
+      const payload = await response.json().catch(() => ({}));
+      const failed = !response.ok || payload.success === false || payload.success === "false";
+      if (failed) throw new Error("submit failed");
+      window.location.assign(form.dataset.thanks || "/thanks");
+    } catch {
+      if (button instanceof HTMLButtonElement) {
+        button.disabled = false;
+        button.textContent = "Send Message";
+      }
+      if (errorEl) {
+        errorEl.textContent = "Something went wrong. Please try again, or email us directly.";
+        errorEl.classList.remove("hidden");
+      }
+    }
+  });
+</script>
