@@ -24,12 +24,12 @@ const { transparent = false } = Astro.props;
         alt=""
         class="h-11 w-11 shrink-0 object-contain md:h-12 md:w-12"
       />
-      <span class="hidden flex-col leading-none sm:flex">
-        <span class="font-display text-lg font-semibold tracking-[0.18em] md:text-xl">CAST RIGHT</span>
-        <span class="mt-1 flex items-center gap-2 text-sm">
-          <span class="h-px w-5 bg-gold-500"></span>
-          <span class="font-display italic tracking-wide">Catch Co.</span>
-          <span class="h-px w-5 bg-gold-500"></span>
+      <span class="hidden flex-col leading-none sm:inline-flex">
+        <span class="-mr-[0.18em] whitespace-nowrap font-display text-lg font-semibold tracking-[0.18em] md:text-xl">CAST RIGHT</span>
+        <span class="mt-1 flex w-full items-center gap-2 text-sm">
+          <span class="h-px min-w-4 flex-1 bg-gold-500" aria-hidden="true"></span>
+          <span class="shrink-0 font-display italic tracking-wide">Catch Co.</span>
+          <span class="h-px min-w-4 flex-1 bg-gold-500" aria-hidden="true"></span>
         </span>
       </span>
     </a>

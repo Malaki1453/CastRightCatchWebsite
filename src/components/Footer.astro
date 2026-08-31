@@ -7,14 +7,14 @@ import { nav, site } from "../data/site";
     <div class="grid gap-10 md:grid-cols-[1.2fr_1fr] md:items-center">
       <div class="flex flex-col items-start gap-5 sm:flex-row sm:items-center">
         <img src="/images/seal.png" alt="" class="h-24 w-24 object-contain sm:h-28 sm:w-28" />
-        <div>
-          <p class="font-display text-4xl font-semibold tracking-[0.12em] text-navy-700 md:text-5xl">
+        <div class="inline-flex flex-col">
+          <p class="-mr-[0.12em] whitespace-nowrap font-display text-4xl font-semibold tracking-[0.12em] text-navy-700 md:text-5xl">
             CAST RIGHT
           </p>
-          <p class="mt-1 flex items-center gap-3 font-display text-2xl italic text-navy-700">
-            <span class="h-px w-8 bg-gold-500"></span>
-            Catch Co.
-            <span class="h-px w-8 bg-gold-500"></span>
+          <p class="mt-1 flex w-full items-center gap-3 font-display text-2xl italic text-navy-700">
+            <span class="h-px min-w-6 flex-1 bg-gold-500" aria-hidden="true"></span>
+            <span class="shrink-0">Catch Co.</span>
+            <span class="h-px min-w-6 flex-1 bg-gold-500" aria-hidden="true"></span>
           </p>
         </div>
       </div>
