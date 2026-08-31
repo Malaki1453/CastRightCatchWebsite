@@ -61,7 +61,7 @@ const ogImage = new URL("/images/hero.jpg", site.url).href;
       logo: new URL("/images/seal.png", site.url).href,
     })} />
   </head>
-  <body class:list={[lockViewport ? "h-svh overflow-hidden antialiased" : "min-h-screen flex flex-col antialiased"]}>
+  <body class:list={[lockViewport ? "h-svh overflow-hidden antialiased" : "flex min-h-screen min-w-0 flex-col antialiased"]}>
     <a
       href="#main"
       class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-white focus:px-4 focus:py-2 focus:text-navy-900"
@@ -69,7 +69,7 @@ const ogImage = new URL("/images/hero.jpg", site.url).href;
       Skip to content
     </a>
     {hideHeader ? null : <Header transparent={transparentHeader} />}
-    <main id="main" class:list={[lockViewport ? "h-full overflow-hidden" : "flex-1"]}>
+    <main id="main" class:list={[lockViewport ? "h-full overflow-hidden" : "min-w-0 flex-1"]}>
       <slot />
     </main>
     {lockViewport ? null : <Footer />}
