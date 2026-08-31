@@ -1,10 +1,11 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { products } from "../data/products";
 ---
 
 <BaseLayout
   title="Products"
-  description="Premium seafood for wholesale buyers, sourced through trusted producers and delivered with quality from start to finish."
+  description="Wholesale farmed and wild salmon, Pacific halibut, sablefish (black cod), and Pacific cod from Cast Right Catch Co."
 >
   <section class="relative isolate overflow-hidden bg-navy-950 text-white">
     <img
@@ -21,7 +22,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   </section>
 
   <section class="bg-white">
-    <div class="mx-auto max-w-4xl px-5 py-16 md:px-8 md:py-24">
+    <div class="mx-auto max-w-4xl px-5 py-16 md:px-8 md:py-20">
       <p class="text-sm font-semibold tracking-[0.22em] uppercase text-gold-600">Wholesale seafood</p>
       <h2 class="mt-3 font-display text-4xl font-semibold text-navy-800 md:text-5xl">
         Premium seafood for buyers who care about the catch.
@@ -34,8 +35,134 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           We work with top-tier producers who manage quality, sustainability, and commitment — so you can count on product that holds up from the source to your dock.
         </p>
       </div>
+
+      <nav class="mt-10 flex flex-wrap gap-2" aria-label="Product list">
+        {
+          products.map((product) => (
+            <a
+              href={`#${product.id}`}
+              class="rounded-full border border-cream-200 px-4 py-2 text-sm font-semibold text-navy-800 transition-colors hover:border-gold-500 hover:text-navy-600"
+            >
+              {product.name}
+            </a>
+          ))
+        }
+      </nav>
     </div>
   </section>
+
+  {
+    products.map((product, index) => {
+      const imageFirst = index % 2 === 1;
+      const hasImages = product.images.length > 0;
+      const sectionBg = index % 2 === 0 ? "bg-cream-50" : "bg-white";
+
+      return (
+        <section id={product.id} class:list={[sectionBg, "scroll-mt-28"]}>
+          <div class="mx-auto max-w-6xl px-5 py-16 md:px-8 md:py-24">
+            <div
+              class:list={[
+                hasImages && "grid items-start gap-10 lg:grid-cols-2 lg:gap-16",
+              ]}
+            >
+              <div class:list={[hasImages && imageFirst && "lg:order-2"]}>
+                <p class="text-sm font-semibold tracking-[0.22em] uppercase text-gold-600">
+                  {product.kicker}
+                </p>
+                <h2 class="mt-3 font-display text-4xl font-semibold text-navy-800 md:text-5xl">
+                  {product.name}
+                </h2>
+                {
+                  product.scientific ? (
+                    <p class="mt-2 font-display text-xl italic text-navy-800/55">{product.scientific}</p>
+                  ) : null
+                }
+                <div class="diamond-rule mt-5 w-28 text-gold-500" aria-hidden="true">
+                  <span></span>
+                </div>
+                <div class="mt-6 space-y-4 text-lg leading-relaxed text-navy-800/85">
+                  <p>{product.summary}</p>
+                  {product.details.map((paragraph) => (
+                    <p>{paragraph}</p>
+                  ))}
+                </div>
+
+                {
+                  product.facts ? (
+                    <dl class="mt-8 grid gap-4 sm:grid-cols-2">
+                      {product.facts.map((fact) => (
+                        <div
+                          class:list={[
+                            "rounded-2xl border border-cream-200 px-5 py-4 shadow-sm",
+                            index % 2 === 0 ? "bg-white" : "bg-cream-50",
+                          ]}
+                        >
+                          <dt class="text-xs font-semibold tracking-[0.16em] uppercase text-gold-600">
+                            {fact.label}
+                          </dt>
+                          <dd class="mt-1.5 text-navy-800">{fact.value}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                  ) : null
+                }
+              </div>
+
+              {
+                hasImages ? (
+                  <div class:list={["space-y-4", imageFirst && "lg:order-1"]}>
+                    {product.images.map((image, imageIndex) =>
+                      image.contain ? (
+                        <div class="flex items-center justify-center rounded-2xl bg-cream-100 px-6 py-8">
+                          <img
+                            src={image.src}
+                            alt={image.alt}
+                            width={image.width}
+                            height={image.height}
+                            class="max-h-56 w-full object-contain"
+                            loading={index === 0 && imageIndex === 0 ? "eager" : "lazy"}
+                          />
+                        </div>
+                      ) : (
+                        <img
+                          src={image.src}
+                          alt={image.alt}
+                          width={image.width}
+                          height={image.height}
+                          class:list={[
+                            "w-full rounded-2xl object-cover shadow-lg",
+                            imageIndex === 0 ? "aspect-[4/3]" : "aspect-[3/2]",
+                          ]}
+                          loading={index === 0 && imageIndex === 0 ? "eager" : "lazy"}
+                        />
+                      ),
+                    )}
+                  </div>
+                ) : null
+              }
+            </div>
+
+            {
+              product.species ? (
+                <div class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {product.species.map((species) => (
+                    <article class="rounded-2xl border border-cream-200 bg-white p-5 shadow-sm">
+                      <h3 class="font-display text-2xl font-semibold text-navy-800">{species.name}</h3>
+                      <p class="mt-1 text-sm font-semibold tracking-[0.12em] uppercase text-gold-600">
+                        {species.aka}
+                      </p>
+                      <p class="mt-4 text-sm leading-relaxed text-navy-800/80">{species.profile}</p>
+                      <p class="mt-3 text-sm leading-relaxed text-navy-800/70">{species.season}</p>
+                    </article>
+                  ))}
+                </div>
+              ) : null
+            }
+          </div>
+        </section>
+      );
+    })
+  }
 
   <section class="bg-navy-900 text-white">
     <div class="mx-auto max-w-3xl px-5 py-16 text-center md:px-8 md:py-24">
