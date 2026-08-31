@@ -70,7 +70,7 @@ export const services: Service[] = [
     kicker: "Logistics",
     paragraphs: [
       "All orders will be tracked and communicated on time. Request to update or follow up on shipments from partners will be handled timely with care. We strive to invest in the best follow up on the market.",
-      "You should not have to chase a shipment. We follow the order from the plant to your dock and keep you posted so there are no surprises on arrival.",
+      "This means constant feedback and communication from our office to ensure a successful transfer and to keep building our partnership.",
     ],
   },
   {
