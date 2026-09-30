@@ -12,6 +12,20 @@ const FIELDS = [
   ["consent", "Privacy consent"],
 ];
 
+/** Keep strings Latin-1 / ASCII-safe for logs and thrown Errors Netlify may put in headers. */
+function asciiSafe(value) {
+  return String(value ?? "")
+    .replaceAll("\u2014", "-") // em dash
+    .replaceAll("\u2013", "-") // en dash
+    .replaceAll("\u2022", "*") // bullet
+    .replaceAll("\u00B7", "*") // middle dot
+    .replaceAll("\u2018", "'")
+    .replaceAll("\u2019", "'")
+    .replaceAll("\u201C", '"')
+    .replaceAll("\u201D", '"')
+    .replace(/[^\x09\x0A\x0D\x20-\x7E]/g, "?");
+}
+
 export default {
   async formSubmitted(event) {
     const fields = event?.data ?? {};
@@ -49,8 +63,23 @@ export default {
 
     if (!response.ok) {
       const detail = await response.text();
-      throw new Error(`Resend ${response.status}: ${detail}`);
+      throw new Error(asciiSafe(`Resend ${response.status}: ${detail}`));
     }
+
+    let resendId = "";
+    try {
+      const payload = await response.json();
+      if (payload && typeof payload.id === "string") {
+        resendId = payload.id;
+      }
+    } catch {
+      // Response body may be empty; success still counts.
+    }
+    console.log(
+      resendId
+        ? `Resend inquiry email sent id=${asciiSafe(resendId)}`
+        : "Resend inquiry email sent",
+    );
   },
 };
 
@@ -66,7 +95,7 @@ function displayValue(key, value) {
   if (key === "consent") {
     return value ? "Yes" : "No";
   }
-  return String(value ?? "").trim() || "—";
+  return String(value ?? "").trim() || "-";
 }
 
 function buildText(fields) {
