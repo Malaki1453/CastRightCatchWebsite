@@ -47,17 +47,20 @@ A Netlify function then sends a branded HTML email (with the company emblem) to 
 
 ### One-time setup
 
+Add **one** environment variable in Netlify. Leave the others unset.
+
 1. Create an account at [resend.com](https://resend.com).
 2. Add and verify the domain `castrightcatch.com` (Resend will give you DNS records to add where the domain is hosted).
-3. Create an API key.
-4. In Netlify, go to **Project configuration → Environment variables** and add:
-   - `RESEND_API_KEY` — the key from Resend
-   - `CONTACT_EMAIL` — `info@castrightcatch.com` (optional; this is the default)
-   - `RESEND_FROM` — `Cast Right Catch Co. <info@castrightcatch.com>` (optional; this is the default)
-5. Redeploy after saving the variables.
-6. Turn **off** the generic Netlify **Forms → Submission notifications** email so the team only gets the branded message.
+3. Create an API key. It starts with `re_`.
+4. In Netlify, go to **Project configuration → Environment variables → Add a variable**:
+   - **Key:** `RESEND_API_KEY`
+   - **Value:** paste the full `re_...` key from Resend
+   - Scopes: Production, and include **Functions** / **Runtime**
+5. Do **not** add `CONTACT_EMAIL` or `RESEND_FROM` unless you are filling them in. Blank values will break sending. The code already emails `info@castrightcatch.com`.
+6. Redeploy after saving the variable.
+7. Keep the generic Netlify form email **off**.
 
-Until the domain is verified, Resend will not send from `info@castrightcatch.com`. After DNS verifies, send a test from the live contact page.
+Until the domain is verified, Resend will not send from `info@castrightcatch.com`. After DNS verifies, send a test from the live contact page. Function errors show up in Netlify under **Logs → Functions**.
 
 ## Brand assets
 
