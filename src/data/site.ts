@@ -7,7 +7,6 @@ export const site = {
     "Cast Right Catch Co. partners with seafood buyers domestically and globally, providing premium seafood while simplifying the logistics that keep the supply chain moving.",
   url: "https://www.castrightcatch.com",
   email: "info@castrightcatch.com",
-  formEmail: "info@castrightcatch.com",
   founded: "June 2026",
 };
 

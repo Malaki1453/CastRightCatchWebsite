@@ -41,7 +41,7 @@ Production files are written to `dist/`.
 
 ## Contact form
 
-The contact form posts to [FormSubmit](https://formsubmit.co) using `info@castrightcatch.com`. The public site still shows `jwatts@castrightcatch.com`. The first live submission sends a confirmation email that must be approved before messages start arriving.
+The contact form uses [Netlify Forms](https://docs.netlify.com/forms/setup/). After deploying, enable form notifications in the Netlify dashboard so submissions are emailed to the team.
 
 ## Brand assets
 
