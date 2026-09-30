@@ -43,10 +43,21 @@ Production files are written to `dist/`.
 
 The contact form uses [Netlify Forms](https://docs.netlify.com/forms/setup/). A static copy of the fields lives in `public/__forms.html` so Netlify can detect the form at deploy time. The visible contact page posts to that file, then redirects to `/thanks`.
 
-After deploying:
+A Netlify function then sends a branded HTML email (with the company emblem) to `info@castrightcatch.com` through [Resend](https://resend.com).
 
-1. In the Netlify dashboard, enable **Forms > Form detection** if it is off, then redeploy.
-2. Enable form notifications so submissions are emailed to the team.
+### One-time setup
+
+1. Create an account at [resend.com](https://resend.com).
+2. Add and verify the domain `castrightcatch.com` (Resend will give you DNS records to add where the domain is hosted).
+3. Create an API key.
+4. In Netlify, go to **Project configuration → Environment variables** and add:
+   - `RESEND_API_KEY` — the key from Resend
+   - `CONTACT_EMAIL` — `info@castrightcatch.com` (optional; this is the default)
+   - `RESEND_FROM` — `Cast Right Catch Co. <info@castrightcatch.com>` (optional; this is the default)
+5. Redeploy after saving the variables.
+6. Turn **off** the generic Netlify **Forms → Submission notifications** email so the team only gets the branded message.
+
+Until the domain is verified, Resend will not send from `info@castrightcatch.com`. After DNS verifies, send a test from the live contact page.
 
 ## Brand assets
 
