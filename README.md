@@ -41,7 +41,12 @@ Production files are written to `dist/`.
 
 ## Contact form
 
-The contact form uses [Netlify Forms](https://docs.netlify.com/forms/setup/). After deploying, enable form notifications in the Netlify dashboard so submissions are emailed to the team.
+The contact form uses [Netlify Forms](https://docs.netlify.com/forms/setup/). A static copy of the fields lives in `public/__forms.html` so Netlify can detect the form at deploy time. The visible contact page posts to that file, then redirects to `/thanks`.
+
+After deploying:
+
+1. In the Netlify dashboard, enable **Forms > Form detection** if it is off, then redeploy.
+2. Enable form notifications so submissions are emailed to the team.
 
 ## Brand assets
 
